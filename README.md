@@ -16,7 +16,7 @@ This repository is organized in the following directories:
 
 # Dependencies:
 
-The software contained in this repository is written in Matlab and C programming languages. In order to run, it needs a valid installation of Matlab and a C compiler compatible with Matlab, such as [GCC](https://gcc.gnu.org/). It has only been tested under Linux (Gentoo Linux and Ubuntu 20.04), but it should work in any other operating system with minor modifications. This code makes use of the following software dependencies, that must be downloaded and placed in the corresponding folder:
+The software contained in this repository is written in Matlab and C programming languages. In order to run, it needs a valid installation of [Matlab](https://www.mathworks.com/products/matlab.html) and a C compiler compatible with Matlab, such as [GCC](https://gcc.gnu.org/). Furthermore, in order to run the code in [Micropatterned_3D_Traction_Calculation](https://github.com/xt-prc-lab/3D_Micropatterned_Traction_Force_Microscopy/tree/main/Micropatterned_3D_Traction_Calculation), it needs a working installation of [Abaqus](https://www.3ds.com/es/productos-y-servicios/simulia/productos/abaqus/). It has only been tested under Linux (Gentoo Linux and Ubuntu 20.04), but it should work in any other operating system with minor modifications. This code makes use of the following software dependencies, that must be downloaded and placed in the corresponding folder:
 
 ## 3D PIV:
 
