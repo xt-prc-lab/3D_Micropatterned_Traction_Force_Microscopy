@@ -42,6 +42,7 @@ f_list = f_0:f_f;
 fold = '/mnt/Data/Laura/2022-07-23_TFM_15kPa_15-19well_DMSO-Bleb/cells/220723_Results-1/15well_gel2_T0-Try/f';
 
 % Settings needed for abaqus caltulation.
+Settings_abaqus.abaqus_path = '/usr/simulia/abaqus/6.14-5/code/bin/abq6145';    % Path of the abaqus executable.
 Settings_abaqus.abaqus_calculate = 1;           % 1 to calculate with Abaqus. 0 otherwise.
 Settings_abaqus.abaqus_ODB_results = 1;         % 1 to extract data from Abaqus' ODB file into a matlab file.
 

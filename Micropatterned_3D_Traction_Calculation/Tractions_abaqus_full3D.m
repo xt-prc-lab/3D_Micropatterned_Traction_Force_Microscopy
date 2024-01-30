@@ -854,7 +854,7 @@ function File = Tractions_abaqus_full3D(Settings, File, exp_type, Settings_abaqu
     % If using the constrained method, obtain the striffness matrix.
     if isfield(Settings, "constrained") && strcmp(Settings.constrained, 'Constrained')
 
-        system(['/usr/simulia/abaqus/6.14-5/code/bin/abq6145 job="', jobname, '"', ' input="', jobabaqus_matrix_input, '"', ...
+        system([Settings_abaqus.abaqus_path, ' job="', jobname, '"', ' input="', jobabaqus_matrix_input, '"', ...
                 ' scratch="', scratch_dir, '"', ' memory="', mem_use, ' mb"', ' interactive', ' cpus=', num2str(n_th_abaqus)])
 
         movefile([jobname, '_STIF2.mtx'], [pathabaqus, filesep, 'abaqusdata', filesep, jobname, '_STIF2_mtx_matrix_input.mtx']);
@@ -869,7 +869,7 @@ function File = Tractions_abaqus_full3D(Settings, File, exp_type, Settings_abaqu
     end
 
     % Launch abaqus analysis.
-    system(['/usr/simulia/abaqus/6.14-5/code/bin/abq6145 job="', jobname, '"', ' input="', jobabaqus, '"', ...
+    system([Settings_abaqus.abaqus_path, ' job="', jobname, '"', ' input="', jobabaqus, '"', ...
             ' scratch="', scratch_dir, '"', ' memory="', mem_use, ' mb"', ' user="', node_disp_subroutine, '"', ...
             ' interactive', ' cpus=', num2str(n_th_abaqus)])
 
@@ -880,8 +880,8 @@ function File = Tractions_abaqus_full3D(Settings, File, exp_type, Settings_abaqu
     modify_workers_local_cluster(n_th, n_th);
 
     % Extract the results from the .odb file to text files.
-    system(['/usr/simulia/abaqus/6.14-5/code/bin/abq6145 cae nogui="' ReadODB, '"'])
-    system(['/usr/simulia/abaqus/6.14-5/code/bin/abq6145 cae nogui="' ReadODB_all_elements, '"'])
+    system([Settings_abaqus.abaqus_path, ' cae nogui="' ReadODB, '"'])
+    system([Settings_abaqus.abaqus_path, ' cae nogui="' ReadODB_all_elements, '"'])
 
     if isfield(Settings, "constrained") && strcmp(Settings.constrained, 'Constrained')
 
