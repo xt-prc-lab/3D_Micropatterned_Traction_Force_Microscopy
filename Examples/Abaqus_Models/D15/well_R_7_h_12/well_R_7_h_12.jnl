@@ -1,0 +1,122 @@
+# -*- coding: mbcs -*-
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].ConstrainedSketch(name='__profile__', sheetSize=200.0)
+mdb.models['Model-1'].sketches['__profile__'].rectangle(point1=(-40.0, 40.0), 
+    point2=(40.0, -40.0))
+mdb.models['Model-1'].Part(dimensionality=THREE_D, name='well_R_7_h_12', type=
+    DEFORMABLE_BODY)
+mdb.models['Model-1'].parts['well_R_7_h_12'].BaseSolidExtrude(depth=70.0, 
+    sketch=mdb.models['Model-1'].sketches['__profile__'])
+del mdb.models['Model-1'].sketches['__profile__']
+mdb.models['Model-1'].ConstrainedSketch(gridSpacing=6.65, name='__profile__', 
+    sheetSize=266.08, transform=
+    mdb.models['Model-1'].parts['well_R_7_h_12'].MakeSketchTransform(
+    sketchPlane=mdb.models['Model-1'].parts['well_R_7_h_12'].faces[4], 
+    sketchPlaneSide=SIDE1, 
+    sketchUpEdge=mdb.models['Model-1'].parts['well_R_7_h_12'].edges[0], 
+    sketchOrientation=RIGHT, origin=(0.0, 0.0, 70.0)))
+mdb.models['Model-1'].parts['well_R_7_h_12'].projectReferencesOntoSketch(
+    filter=COPLANAR_EDGES, sketch=
+    mdb.models['Model-1'].sketches['__profile__'])
+mdb.models['Model-1'].sketches['__profile__'].CircleByCenterPerimeter(center=(
+    0.0, 0.0), point1=(-7.5, 0.0))
+mdb.models['Model-1'].parts['well_R_7_h_12'].CutExtrude(depth=12.0, 
+    flipExtrudeDirection=OFF, sketch=
+    mdb.models['Model-1'].sketches['__profile__'], sketchOrientation=RIGHT, 
+    sketchPlane=mdb.models['Model-1'].parts['well_R_7_h_12'].faces[4], 
+    sketchPlaneSide=SIDE1, sketchUpEdge=
+    mdb.models['Model-1'].parts['well_R_7_h_12'].edges[0])
+del mdb.models['Model-1'].sketches['__profile__']
+mdb.models['Model-1'].parts['well_R_7_h_12'].Round(edgeList=(
+    mdb.models['Model-1'].parts['well_R_7_h_12'].edges[0], ), radius=1.0)
+mdb.models['Model-1'].parts['well_R_7_h_12'].Round(edgeList=(
+    mdb.models['Model-1'].parts['well_R_7_h_12'].edges[2], ), radius=0.5)
+mdb.models['Model-1'].Material(name='PAAm-elastic')
+mdb.models['Model-1'].materials['PAAm-elastic'].Elastic(table=((15000.0, 0.48), 
+    ))
+mdb.models['Model-1'].Material(name='PAAm-hyperelastic')
+mdb.models['Model-1'].materials['PAAm-hyperelastic'].Hyperelastic(materialType=
+    ISOTROPIC, table=((2533.78, 1.6e-05), ), testData=OFF, type=NEO_HOOKE, 
+    volumetricResponse=VOLUMETRIC_DATA)
+mdb.models['Model-1'].HomogeneousSolidSection(material='PAAm-hyperelastic', 
+    name='Section-1', thickness=None)
+mdb.models['Model-1'].parts['well_R_7_h_12'].Set(cells=
+    mdb.models['Model-1'].parts['well_R_7_h_12'].cells.getSequenceFromMask((
+    '[#1 ]', ), ), name='Set-1')
+mdb.models['Model-1'].parts['well_R_7_h_12'].SectionAssignment(offset=0.0, 
+    offsetField='', offsetType=MIDDLE_SURFACE, region=
+    mdb.models['Model-1'].parts['well_R_7_h_12'].sets['Set-1'], sectionName=
+    'Section-1', thicknessAssignment=FROM_SECTION)
+mdb.models['Model-1'].rootAssembly.DatumCsysByDefault(CARTESIAN)
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'well_R_7_h_12-1', part=mdb.models['Model-1'].parts['well_R_7_h_12'])
+mdb.models['Model-1'].rootAssembly.Set(faces=
+    mdb.models['Model-1'].rootAssembly.instances['well_R_7_h_12-1'].faces.getSequenceFromMask(
+    ('[#200 ]', ), ), name='Set-1')
+mdb.models['Model-1'].EncastreBC(createStepName='Initial', localCsys=None, 
+    name='BC-1', region=mdb.models['Model-1'].rootAssembly.sets['Set-1'])
+mdb.models['Model-1'].StaticStep(name='Step-1', nlgeom=ON, previous='Initial')
+mdb.models['Model-1'].rootAssembly.Set(faces=
+    mdb.models['Model-1'].rootAssembly.instances['well_R_7_h_12-1'].faces.getSequenceFromMask(
+    ('[#f ]', ), ), name='Set-2')
+mdb.models['Model-1'].DisplacementBC(amplitude=UNSET, createStepName='Step-1', 
+    distributionType=USER_DEFINED, fieldName='', fixed=OFF, localCsys=None, 
+    name='BC-2', region=mdb.models['Model-1'].rootAssembly.sets['Set-2'], u1=
+    1e-16, u2=1e-16, u3=1e-16, ur1=UNSET, ur2=UNSET, ur3=UNSET)
+mdb.models['Model-1'].parts['well_R_7_h_12'].seedPart(deviationFactor=0.1, 
+    minSizeFactor=0.1, size=3.6)
+mdb.models['Model-1'].parts['well_R_7_h_12'].seedEdgeBySize(constraint=FINER, 
+    deviationFactor=0.1, edges=
+    mdb.models['Model-1'].parts['well_R_7_h_12'].edges.getSequenceFromMask((
+    '[#f ]', ), ), minSizeFactor=0.1, size=0.6)
+mdb.models['Model-1'].parts['well_R_7_h_12'].setMeshControls(elemShape=TET, 
+    regions=
+    mdb.models['Model-1'].parts['well_R_7_h_12'].cells.getSequenceFromMask((
+    '[#1 ]', ), ), technique=FREE)
+mdb.models['Model-1'].parts['well_R_7_h_12'].setElementType(elemTypes=(
+    ElemType(elemCode=C3D20R, elemLibrary=STANDARD), ElemType(elemCode=C3D15, 
+    elemLibrary=STANDARD), ElemType(elemCode=C3D10, elemLibrary=STANDARD)), 
+    regions=(
+    mdb.models['Model-1'].parts['well_R_7_h_12'].cells.getSequenceFromMask((
+    '[#1 ]', ), ), ))
+mdb.models['Model-1'].parts['well_R_7_h_12'].setElementType(elemTypes=(
+    ElemType(elemCode=C3D8R, elemLibrary=STANDARD), ElemType(elemCode=C3D6, 
+    elemLibrary=STANDARD), ElemType(elemCode=C3D4H, elemLibrary=STANDARD)), 
+    regions=(
+    mdb.models['Model-1'].parts['well_R_7_h_12'].cells.getSequenceFromMask((
+    '[#1 ]', ), ), ))
+mdb.models['Model-1'].parts['well_R_7_h_12'].generateMesh()
+# Save by ictd on 2023_06_14-11.12.35; build 6.14-5 2015_08_18-16.32.57 135153
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].rootAssembly.regenerate()
+mdb.Job(atTime=None, contactPrint=OFF, description='', echoPrint=OFF, 
+    explicitPrecision=SINGLE, getMemoryFromAnalysis=True, historyPrint=OFF, 
+    memory=90, memoryUnits=GIGA_BYTES, model='Model-1', modelPrint=OFF, 
+    multiprocessingMode=DEFAULT, name='Job-111', nodalOutputPrecision=SINGLE, 
+    numCpus=1, numGPUs=0, queue=None, resultsFormat=ODB, scratch='', type=
+    ANALYSIS, userSubroutine='', waitHours=0, waitMinutes=0)
+# Save by ictd on 2023_06_14-11.12.54; build 6.14-5 2015_08_18-16.32.57 135153
