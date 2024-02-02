@@ -5,7 +5,7 @@ This repository contains the code used in the analysis of the paper "3D micropat
 It allows to calculate the 3D tractions exerted by a cell inside a micro-well micropatterned in a soft gel. It makes use of the following experimental data: 
 
   * A 3D microscopy stack image of fluorescent markers embedded on the surface of the gel in a deformed configuration (when the cell is present).
-  * Another image after the cell has been removed, killed or relaxed (reference image).
+  * Another 3D microscopy stack image after the cell has been removed, killed or relaxed (reference image).
 
 This repository is organized in the following directories:
 
@@ -46,3 +46,20 @@ This code makes use of the following software dependencies, that must be downloa
   * [TIFFStack](https://github.com/DylanMuir/TIFFStack): fast loading of TIFF files into Matlab.
 
 # Instructions:
+
+## Data Preparation:
+
+The minimum dataset needed to run this code consists on:
+
+  * A 3D microscopy stack image of fluorescent markers embedded on the surface of the gel in a deformed configuration (when the cell is present). It needs to span the whole depth of the well, and it must not cut the Point Spread Function of the florescent beads.
+  * Another 3D microscopy stack image after the cell has been removed, killed or relaxed (reference image).
+
+Optionally, 
+
+  * Any other 3D microscopy stack images of the sample can be provided and they will be aligned together with the previous two, but they will not be used for the deformation and traction calculations.
+
+Here is an illustration of the example dataset provided [here](https://github.com/xt-prc-lab/3D_Micropatterned_Traction_Force_Microscopy/tree/main/Examples/Data/220412). It represents an orthogonal view of the data: XY slice in the upper left pannel, XZ slice in the lower left pannel and YZ slice in the upper right pannel. It is an overlay of 3 different channels: the red channel represents the beads in the reference configuration, the green channel are the beads in the deformed configuration and the blue channel represents a fluorescence channel of the cell.
+
+<p align="center">
+<img src="https://github.com/xt-prc-lab/3D_Micropatterned_Traction_Force_Microscopy/blob/main/Images/Example_Orthogonal_Views.png" alt="Orthogonal_Views_of_Raw_Data" align="center" width=35%>
+</p>
