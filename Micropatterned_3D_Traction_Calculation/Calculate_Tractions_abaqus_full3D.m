@@ -95,6 +95,9 @@ if strcmp(exp_type, 'Wells')
 
 end
 
+% Job created in Abaqus to analyze the FEM problem.
+Settings_abaqus.jobabaqus_file = 'Job-111.inp';
+
 % Scratch directory used by abaqus. Set it if you have any problem with the default one (e.g. if /tmp is mapped to ram, and you 
 % run out of ram memory).
 Settings_abaqus.abaqus_scratch_dir = '/tmp';

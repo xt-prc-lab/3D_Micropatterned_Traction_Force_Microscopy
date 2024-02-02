@@ -123,8 +123,9 @@ function File = Tractions_abaqus_full3D(Settings, File, exp_type, Settings_abaqu
     mem_use = Settings_abaqus.abaqus_mem_use;
 
     % Job created in Abaqus to analyze the FEM problem.
-    jobabaqus_file = 'Job-111.inp';
-    jobabaqus_file_orig = 'Job-111_orig.inp';       % Original file, from Abaqus, before we do our modifications.
+    jobabaqus_file = Settings_abaqus.jobabaqus_file;
+    % Original file, from Abaqus, before we do our modifications.
+    jobabaqus_file_orig = [jobabaqus_file(1:end-4), '_orig', jobabaqus_file(end-3:end)];
 
     conv_th = 0.80 ;                % Use only the PIV data with a correlation peak value higher than conv_th.
 
