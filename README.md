@@ -12,7 +12,7 @@ This repository is organized in the following directories:
   * [3D_PIV](https://github.com/xt-prc-lab/3D_Micropatterned_Traction_Force_Microscopy/tree/main/3D_PIV) contains the code to calculate the 3D displacement field of the gel.
   * [Micropatterned_3D_Traction_Calculation](https://github.com/xt-prc-lab/3D_Micropatterned_Traction_Force_Microscopy/tree/main/Micropatterned_3D_Traction_Calculation) contains the code to calculate the exerted tractions from the previously calculated displacement field.
   * [Unfold_Well](https://github.com/xt-prc-lab/3D_Micropatterned_Traction_Force_Microscopy/tree/main/Unfold_Well) contains the code to project and separate the data in the different sections of the well: the upper surface of the gel, the well's walls and the well's bottom.
-  * [Examples](https://github.com/xt-prc-lab/3D_Micropatterned_Traction_Force_Microscopy/tree/main/Examples) contains an example experiment to be analyzed.
+  * [Examples](https://github.com/xt-prc-lab/3D_Micropatterned_Traction_Force_Microscopy/tree/main/Examples) contains two example experiments to be analyzed.
 
 # Prerequisites:
 
@@ -63,3 +63,5 @@ Here is an illustration of the example dataset provided [here](https://github.co
 <p align="center">
 <img src="https://github.com/xt-prc-lab/3D_Micropatterned_Traction_Force_Microscopy/blob/main/Images/Example_Orthogonal_Views.png" alt="Orthogonal_Views_of_Raw_Data" align="center" width=35%>
 </p>
+
+Any naming convention can be followed for the data. The only restriction is that the names of the different channels have to end with a number.
