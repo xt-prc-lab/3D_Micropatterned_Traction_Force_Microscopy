@@ -67,6 +67,8 @@ Here is an illustration of the example dataset provided [here](https://github.co
 <img src="https://github.com/xt-prc-lab/3D_Micropatterned_Traction_Force_Microscopy/blob/main/Images/Example_Orthogonal_Views.png" alt="Orthogonal_Views_of_Raw_Data" align="center" width=35%>
 </p>
 
+Two examples of datasets are provided [here](https://github.com/xt-prc-lab/3D_Micropatterned_Traction_Force_Microscopy/tree/main/Examples/Data).
+
 ### File image convention:
 
 Any naming convention can be followed for the data. The only restriction is that the names of the different channels have to end with a number. This number represents the timepoint of the data aquisition. Files present in the same directory with the same name, only differing in the trailing number, will be considered as different timepoints of the same image series. Multiple timepoints will be automatically detected and can be succesively analyzed by this software. Optionally, another number series could be included before the time identifier, separated by another non-numeric character, to represent a position in the sample. This number can be used to sequentially analize multiple positions of the same sample.
@@ -77,3 +79,6 @@ As an example, the image stack provided [here](https://github.com/xt-prc-lab/3D_
 ```
 representing the timepoint 0 of position 4.
 
+### Abaqus model:
+
+In order to calculate the tractions, an Abaqus model of the well needs to be provided. Two types of Boundary Conditions need to be enforced: "encastre" at the lowest plane of the model, and "user-defined" displacements at the top surface (including the well walls) of the model. The model needs to be meshed with tetrahedral elements. An "*.inp" Abaqus job file needs to be created and saved in a directory. Only the "*.inp" file is needed for the traction calculation, but it is a good practice to also save the  "*.cae" model in the same directory. Any file stored in the same directory than the  "*.inp" job file will be copied over to the results folder.
