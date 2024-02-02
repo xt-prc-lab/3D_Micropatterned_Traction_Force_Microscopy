@@ -105,9 +105,17 @@ By default, when [PIV_3D.m](https://github.com/xt-prc-lab/3D_Micropatterned_Trac
 
 ### Results:
 
-A new directory will be created with the name indicated by File.pathname, defined around lines 53 and 94, and all the results will be placed there. The following files and directories will be placed inside:
+A new directory will be created with the name indicated by File.pathname, defined around lines 53 and 94, and all the results will be placed there. In particular, for the example provided, the directory 220412_Results will be created. A directory will be created inside for each position analyzed. In particular, for the example provided, this will be the directory 220412_Results/f4. The following files and directories will be placed inside:
 
   * Settings.mat: structure containing the settings used in the analysis.
   * File.mat: structure containing parameters regarding the files analyzed.
   * Croppeddata: directory containing the stacks of the different channels, aligned and cropped to the desired size.
   * Displacements: directory containing the files storing the measured displacement field.
+
+## Micropatterned 3D Traction Calculation:
+
+In order to calculate the 3D tractions, the [Calculate_Tractions_abaqus_full3D.m](https://github.com/xt-prc-lab/3D_Micropatterned_Traction_Force_Microscopy/blob/main/Micropatterned_3D_Traction_Calculation/Calculate_Tractions_abaqus_full3D.m) file needs to be run.
+
+### Parameters:
+
+### Results:
