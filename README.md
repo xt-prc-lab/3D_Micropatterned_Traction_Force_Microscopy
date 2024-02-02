@@ -114,8 +114,12 @@ A new directory will be created with the name indicated by File.pathname, define
 
 ## Micropatterned 3D Traction Calculation:
 
-In order to calculate the 3D tractions, the [Calculate_Tractions_abaqus_full3D.m](https://github.com/xt-prc-lab/3D_Micropatterned_Traction_Force_Microscopy/blob/main/Micropatterned_3D_Traction_Calculation/Calculate_Tractions_abaqus_full3D.m) file needs to be run.
+In order to calculate the 3D tractions, the [Calculate_Tractions_abaqus_full3D.m](https://github.com/xt-prc-lab/3D_Micropatterned_Traction_Force_Microscopy/blob/main/Micropatterned_3D_Traction_Calculation/Calculate_Tractions_abaqus_full3D.m) file needs to be run. It will use the data stored in the "Results" folder created by the 3D PIV.
 
 ### Parameters:
+
+Most parameters will be carried over from the PIV. However, any new parameter needed for the traction calculation will be placed in the [Calculate_Tractions_abaqus_full3D.m](https://github.com/xt-prc-lab/3D_Micropatterned_Traction_Force_Microscopy/blob/main/Micropatterned_3D_Traction_Calculation/Calculate_Tractions_abaqus_full3D.m) file. These parameters include the height of the model gel, the choice of "Constrained" or "Unconstrained" method, the application of the "Refraction Index Correction", the surface on which the displacements are imposed, the location of the Abaqus executable and model, the name of the Abaqus job file, etc. Those parameters are extensively commented in the file. The parameters imposed in the PIV can be replaced here, writting them in a structure called Settings_new. An example is given in this file. Let's say the pixel size written for the PIV was not correct. It can be safely replaced, because the PIV will output its results in pixels, not in microns. Around line 63, new variables Settings_new.PixelSizeXY and Settings_new.PixelSizeZ are created with the correct values, and the code will store them in the Settings structure.
+
+### Refraction Index Missmatch correction:
 
 ### Results:
