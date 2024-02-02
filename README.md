@@ -52,7 +52,7 @@ This code makes use of the following software dependencies, that must be downloa
 The minimum dataset needed to run this code consists on:
 
   * A 3D microscopy stack image of fluorescent markers embedded on the surface of the gel in a deformed configuration (when the cell is present). It needs to span the whole depth of the well, and it must not cut the Point Spread Function of the florescent beads.
-  * Another 3D microscopy stack image after the cell has been removed, killed or relaxed (reference image).
+  * Another 3D microscopy stack image after the cell has been removed or relaxed (reference image).
 
 Optionally, 
 
