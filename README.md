@@ -87,3 +87,27 @@ In order to calculate the tractions, an Abaqus model of the well needs to be pro
   * "user-defined" displacements at the top surface (including the well walls) of the model.
 
 The model needs to be meshed with tetrahedral elements. An "\*.inp" Abaqus job file needs to be created and saved in a directory. Only the "\*.inp" file is needed for the traction calculation, but it is a good practice to also save the  "\*.cae" model in the same directory. Any file stored in the same directory than the  "\*.inp" job file will be copied over to the results folder. Two examples of Abaqus models can be found [here](https://github.com/xt-prc-lab/3D_Micropatterned_Traction_Force_Microscopy/tree/main/Examples/Abaqus_Models).
+
+## 3D PIV (Displacement Calculation):
+
+In order to calculate the 3D deformation, the [PIV_3D.m](https://github.com/xt-prc-lab/3D_Micropatterned_Traction_Force_Microscopy/blob/main/3D_PIV/PIV_3D.m) file needs to be run.
+
+### Parameters:
+
+Two different files contain the parameters for the PIV and the experiment, and need to be modified beforehand:
+
+  * [set_settings.m](https://github.com/xt-prc-lab/3D_Micropatterned_Traction_Force_Microscopy/blob/main/3D_PIV/set_settings.m): contains the parameters for the PIV, such as the channels to analyze, the extension of the images, PIV box size and overlap, etc.
+  * [gel_settings.m](https://github.com/xt-prc-lab/3D_Micropatterned_Traction_Force_Microscopy/blob/main/3D_PIV/gel_settings.m): contains parameters such as pixel size, filtering parameters, etc.
+
+All of the parameters contained in those files are extensively commented.
+
+By default, when [PIV_3D.m](https://github.com/xt-prc-lab/3D_Micropatterned_Traction_Force_Microscopy/blob/main/3D_PIV/PIV_3D.m) is run, a file selection dialog will be displayed for each file type to input (beads, trypsin and optionally other fluorescence channels). Any timepoint from the time series can be chosen, and the rest of the timepoints will be automatically detected. In order to automatize the calculation of multiple timepoints, this default behaviour can be overriden. Around line 116, multiple variable are created with the names of the files to analyze, such as File.BeadsName and File.TrypsinName. They make use of the variables BeadsName, TrypsinName, etc. defined around line 53. If the names contained in File.BeadsName, File.TrypsinName, etc. exist, the code will automatically analyze those and will not prompt to click and select the data files. This code is prepared to sequentially analyze multiple positons and timepoints without user input.
+
+### Results:
+
+A new directory will be created with the name indicated by File.pathname, defined around lines 53 and 94, and all the results will be placed there. The following files and directories will be placed inside:
+
+  * Settings.mat: structure containing the settings used in the analysis.
+  * File.mat: structure containing parameters regarding the files analyzed.
+  * Croppeddata: directory containing the stacks of the different channels, aligned and cropped to the desired size.
+  * Displacements: directory containing the files storing the measured displacement field.
