@@ -5,7 +5,7 @@ This repository contains the code used in the analysis of the paper "3D micropat
 It allows to calculate the 3D tractions exerted by a cell inside a micro-well micropatterned in a soft gel. It makes use of the following experimental data: 
 
   * A 3D microscopy stack image of fluorescent markers embedded on the surface of the gel in a deformed configuration (when the cell is present).
-  * Another 3D microscopy stack image after the cell has been removed, killed or relaxed (reference image).
+  * Another 3D microscopy stack image after the cell has been removed or relaxed (reference image).
 
 This repository is organized in the following directories:
 
