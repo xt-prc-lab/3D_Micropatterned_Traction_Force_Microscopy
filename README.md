@@ -33,12 +33,15 @@ This code makes use of the following software dependencies, that must be downloa
 ## 3D PIV:
 
   * [TIFFStack](https://github.com/DylanMuir/TIFFStack): fast loading of TIFF files into Matlab.
+  * [inpaint_nans3.m](https://www.mathworks.com/matlabcentral/fileexchange/21214-inpainting-nan-elements-in-3-d): in-paints over nans in a 3-D array.
+  * [natsort.m](https://www.mathworks.com/matlabcentral/fileexchange/47434-natural-order-filename-sort) and [natsortfiles.m](https://www.mathworks.com/matlabcentral/fileexchange/47434-natural-order-filename-sort): natural-order sort of filenames or filepaths.
+  * [removeOutliers.m](https://github.com/FranckLab/FIDVC/blob/master/Matlab%20Code/removeOutliers.m): remove outliers from PIV data.
 
 ## Micropatterned 3D Traction Calculation:
 
   * [TIFFStack](https://github.com/DylanMuir/TIFFStack): fast loading of TIFF files into Matlab.
   * [fitcircle.m](https://www.mathworks.com/matlabcentral/fileexchange/15060-fitcircle-m): fit a set of points to a circle.
-  * [inpaint_nans3](https://www.mathworks.com/matlabcentral/fileexchange/21214-inpainting-nan-elements-in-3-d): in-paints over nans in a 3-D array.
+  * [inpaint_nans3.m](https://www.mathworks.com/matlabcentral/fileexchange/21214-inpainting-nan-elements-in-3-d): in-paints over nans in a 3-D array.
   * [removeOutliers.m](https://github.com/FranckLab/FIDVC/blob/master/Matlab%20Code/removeOutliers.m): remove outliers from PIV data.
 
 ## Unfold Well:
@@ -69,7 +72,7 @@ Here is an illustration of the example dataset provided [here](https://github.co
 
 Two examples of datasets are provided [here](https://github.com/xt-prc-lab/3D_Micropatterned_Traction_Force_Microscopy/tree/main/Examples/Data).
 
-### File image convention:
+### File image naming convention:
 
 Any naming convention can be followed for the data. The only restriction is that the names of the different channels have to end with a number. This number represents the timepoint of the data aquisition. Files present in the same directory with the same name, only differing in the trailing number, will be considered as different timepoints of the same image series. Multiple timepoints will be automatically detected and can be succesively analyzed by this software. Optionally, another number series could be included before the time identifier, separated by another non-numeric character, to represent a position in the sample. This number can be used to sequentially analize multiple positions of the same sample.
 
