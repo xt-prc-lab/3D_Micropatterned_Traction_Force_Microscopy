@@ -44,6 +44,7 @@ function [Settings] = set_settings(Settings)
     Settings.exp_type = 'Wells';                        % Type of experiment.
 
     Settings.num_planes = 98;                           % Number of planes kept in the cropper.
+    Settings.num_planes = 126;
 
     Settings.Round_Fourier_Size = 0;                    % If 0, use the resolution provided. 
                                                         % Otherwise, round to the nearest power of 2.

@@ -22,10 +22,12 @@ n_th_per_worker = 8;
 % Paths of the image files used. If they exist, prompt windows to select them will not appear.
 % These files names have a consistent structure, e.g. date_Illumination_magnification_location_time.tif.
 pad = 1;                            % Zero-padding used in the tags. For example, pad=4 renders _t0000, _t0001, _t4204, etc.
-f_0 = 1;                            % Initial location analyzed.
-f_end = 1;                          % Final location analyzed.
+f_0 = 4;                            % Initial location analyzed.
+% f_0 = 2;
+f_end = 4;                          % Final location analyzed.
+% f_end = 2;
 
-f_list = f_0:f_end ;                % Vector that contains all the locations analyzed (they don't need to be consecutive). E.g.
+f_list = f_0:f_end;                 % Vector that contains all the locations analyzed (they don't need to be consecutive). E.g.
                                     % f_list = [ 13, 15, 16, 19, 21 ];
 
 ending = '_t0.';                    % Time tag of any of the images, e.g. '_t0015.'.
@@ -39,34 +41,26 @@ for ii=(f_0:f_end)+1
     ending_tryp{ii} = '_t0.';
 end
 
-dat = '210407';                     % Date of the experiment.
-dat_tryp = '210407';                % Date of the trypsin acquisition.
+dat = '220412';                     % Date of the experiment.
+% dat = '230414';
+dat_tryp = '220412';                % Date of the trypsin acquisition.
+% dat_tryp = '230414';
 mag = '40x';                        % Magnification.
-fold = '/home/manu/Documents/Laura/Abaqus_Current';
+fold = '../Examples/Data';
 
-% beads_col = 'Far_Red';            % Parameters of the illumination name used.
-beads_col = 'Green';
-% beads_col = 'Red';
-% fluo_col = 'Green';
-% fluo_col = 'Red';
-fluo_col = 'Far_Red';
-% BF = 'Bright_Field_Stack_';
-% BF = 'Bright_Field_';
-% BF = '_Organoids_Bright_Field_';
-
-% cells_name = 'Organoids';
-cells_name = 'Cells_';
-modif = '';
-% modif = 'Calyculin_';
-modif_tryp = '_Try';
-% modif_tryp = 'Tripsin_';
+beads_pref = [dat, '_15kPa_19well_gel2_beads'];             % Parameters of the illumination name used.
+% beads_pref = [dat, '_15kPa_15well_gel2_beads'];
+fluo_pref = [dat, '_15kPa_19well_gel2_cell-tracker'];
+% fluo_pref = [dat, '_15kPa_15well_gel2_cell-tracker'];
+tryp_pref = [beads_pref, '_Try'];
+% BF_pref = '';
 
 % Roots for the names of the files and folders used.
-pathname = [fold, '/', dat, '_Results/gel2_t0-Try/f'];
-BeadsName = [fold, filesep, dat, '/',  dat, '_15Kpa_15well_beads_gel2', '_f'];
-%BFName = [fold, '/', dat, '/', dat, '_', cells_name, BF, modif, mag, '/', dat, '_', cells_name, BF, modif, mag, '_f'];
-TrypsinName = [fold, filesep, dat, '/',  dat, '_15Kpa_15well_beads', modif_tryp, '_gel2_f'];
-Fluo_1Name = [fold, filesep, dat, '/', dat,  '_15Kpa_15well_cell-tracker_gel2', '_f'];
+pathname = [fold, filesep, dat, '_Results', filesep, 'f'];
+BeadsName = [fold, filesep, dat, filesep,  beads_pref, '_f'];
+% BFName = [fold, filesep, dat, filesep, BF_pref, '_f'];
+TrypsinName = [fold, filesep, dat, filesep, tryp_pref, '_f'];
+Fluo_1Name = [fold, filesep, dat, filesep, fluo_pref, '_f'];
 
 %------------------------------------------------------------------------------------------------------------------------------%
 
@@ -124,19 +118,18 @@ for ii=f_list
 
     Settings = set_settings(Settings);
 
-    % Paths of the image files used. If they exist, prompt windows to select them will not appear.
+    % Paths of the image files used. If they exist, prompt dialogs to select them will not appear.
     File.pathname = [pathname, sprintf(['%0', num2str(pad), 'd'], ii)];
-    if exist('BeadsName', 'var')==1
-        File.BeadsName = [BeadsName, sprintf(['%0', num2str(pad), 'd'], ii), ending, Settings.Imgfmt];
-    end
-    if exist('BFName', 'var')==1
-        File.BFName = [BFName, sprintf(['%0', num2str(pad), 'd'], ii), ending, Settings.Imgfmt];
-    end
-    if exist('TrypsinName', 'var')==1
-        File.TrypsinName = [TrypsinName, sprintf(['%0', num2str(pad), 'd'], ii), ending_tryp{ii+1}, Settings.Imgfmt];
-    end
-    if exist('Fluo_1Name', 'var')==1
-        File.Fluo_1Name = [Fluo_1Name, sprintf(['%0', num2str(pad), 'd'], ii), ending, Settings.Imgfmt];
+
+    file_type = {'Beads', 'Trypsin', 'BF', 'Fluo', 'Fluo_1', 'Fluo_2'};
+
+    for jj = 1:numel(file_type)
+
+        if exist([file_type{jj}, 'Name'], 'var')==1
+            File.([file_type{jj}, 'Name']) = ...
+                [eval([file_type{jj}, 'Name']), sprintf(['%0', num2str(pad), 'd'], ii), ending, Settings.Imgfmt];
+        end
+
     end
 
     % Open files:

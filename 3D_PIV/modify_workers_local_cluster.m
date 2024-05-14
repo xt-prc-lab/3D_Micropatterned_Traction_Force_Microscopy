@@ -17,23 +17,20 @@
 %                                                                                                                              %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-function varargout = modify_workers_local_cluster(varargin)% n_w, n_th_per_worker)
+function varargout = modify_workers_local_cluster(varargin)   % n_w, n_th_per_worker)
 
     try
 
         % Check the number of inputs.
         if nargin==0
-
             n_w = feature('NumCores');
             n_th_per_worker = n_w;
 
         elseif nargin==1
-
             n_w = varargin{1};
             n_th_per_worker = n_w;
 
         else
-
             n_w = varargin{1};
             n_th_per_worker = varargin{2};
 
@@ -44,10 +41,8 @@ function varargout = modify_workers_local_cluster(varargin)% n_w, n_th_per_worke
         poolobj = gcp('nocreate') ;
 
         if myCluster.NumWorkers ~= n_w
-
             myCluster.NumWorkers = n_w;
             saveProfile(myCluster);
-
         end
 
         if isempty(poolobj) || poolobj.NumWorkers ~= n_w

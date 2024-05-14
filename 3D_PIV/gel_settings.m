@@ -9,7 +9,7 @@
 %       Settings [struct]: structure containing the different parameters for the analysis.                                     %
 %                                                                                                                              %
 %   Last Revison Date: 29/01/2024                                                                                              %
-%   Created by Manuel Gomez Gonzalez                                                                                           %
+%   Created by Manuel Gomez Gonzalez and Ernest Latorre Ibars                                                                  %
 %                                                                                                                              %
 %   References:                                                                                                                %
 %       "Refractive index and axial distance measurements in 3-D microscopy";                                                  %
@@ -54,7 +54,7 @@ function [Settings] = gel_settings(Settings)
 %     Settings.Corr_idx = sqrt((Settings.n2^2 - Settings.NA^2)/(Settings.n1^2 - Settings.NA^2));      % Theoretical correction.
 
     % Correct for the refraction index missmatch between objective medium and sample.
-    Settings.GelHeight = Settings.GelHeight*Settings.Corr_idx;
+%     Settings.GelHeight = Settings.GelHeight*Settings.Corr_idx;
     Settings.PixelSizeZ = Settings.PixelSizeZ*Settings.Corr_idx;
 
 end

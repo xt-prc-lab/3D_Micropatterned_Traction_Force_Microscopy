@@ -9,7 +9,7 @@
 %       N/A.                                                                                                                   %
 %                                                                                                                              %
 %   Last Revison Date: 09/02/2024                                                                                              %
-%   Author: Manuel Gomez Gonzalez                                                                                              %
+%   Author: Manuel Gomez Gonzalez and Ernest Latorre Ibars                                                                     %
 %                                                                                                                              %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
