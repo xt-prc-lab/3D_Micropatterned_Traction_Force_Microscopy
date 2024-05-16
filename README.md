@@ -134,3 +134,12 @@ In order to apply the Refraction Index missmatch correction, the variable Settin
 In order to calculate the tractions with the constrained method, the variable Settings_new.constrained needs to be set to 'Constrained'. Any other value, or if the variable doesn't exist will default to the unconstrained method.
 
 ### Results:
+
+The following files and directories will be placed inside the Results directory:
+
+  * Settings_abaqus.mat: structure containing the abaqus settings used in the analysis.
+  * abaqusdata: directory containing the abaqus files: *.inp, *.cae, *.odb and *.mtx, fortran subroutines *.f, python scripts *.py, and exports of the abaqus calculated data in text files *.dat.
+  * Boundary: directory containing the boundary of the domain.
+  * Images: directory where the images of the data will be stored. It will be empty at this point of the analysis.
+  * Mask: directory containing masks of the domain.
+  * Tractions_Abaqus: directory containing the files storing the calculated traction field.
