@@ -82,15 +82,6 @@ As an example, the image stack provided [here](https://github.com/xt-prc-lab/3D_
 ```
 representing the timepoint 0 of position 4.
 
-### Abaqus model:
-
-In order to calculate the tractions, an Abaqus model of the well needs to be provided. Two types of Boundary Conditions need to be imposed: 
-
-  * "encastre" at the lowest plane of the model, and
-  * "user-defined" displacements at the top surface (including the well walls) of the model.
-
-The model needs to be meshed with tetrahedral elements. An "\*.inp" Abaqus job file needs to be created and saved in a directory. Only the "\*.inp" file is needed for the traction calculation, but it is a good practice to also save the  "\*.cae" model in the same directory. Any file stored in the same directory than the  "\*.inp" job file will be copied over to the results folder. Two examples of Abaqus models can be found [here](https://github.com/xt-prc-lab/3D_Micropatterned_Traction_Force_Microscopy/tree/main/Examples/Abaqus_Models).
-
 ## 3D PIV (Displacement Calculation):
 
 In order to calculate the 3D deformation, the [PIV_3D.m](https://github.com/xt-prc-lab/3D_Micropatterned_Traction_Force_Microscopy/blob/main/3D_PIV/PIV_3D.m) file needs to be run.
@@ -118,6 +109,15 @@ A new directory will be created with the name indicated by File.pathname, define
 ## Micropatterned 3D Traction Calculation:
 
 In order to calculate the 3D tractions, the [Calculate_Tractions_abaqus_full3D.m](https://github.com/xt-prc-lab/3D_Micropatterned_Traction_Force_Microscopy/blob/main/Micropatterned_3D_Traction_Calculation/Calculate_Tractions_abaqus_full3D.m) file needs to be run. It will use the data stored in the "Results" folder created by the 3D PIV.
+
+### Abaqus model:
+
+In order to calculate the tractions, an Abaqus model of the well needs to be provided. Two types of Boundary Conditions need to be imposed: 
+
+  * "encastre" at the lowest plane of the model, and
+  * "user-defined" displacements at the top surface (including the well walls) of the model.
+
+The model needs to be meshed with tetrahedral elements. An "\*.inp" Abaqus job file needs to be created and saved in a directory. Only the "\*.inp" file is needed for the traction calculation, but it is a good practice to also save the  "\*.cae" model in the same directory. Any file stored in the same directory than the  "\*.inp" job file will be copied over to the results folder. Two examples of Abaqus models can be found [here](https://github.com/xt-prc-lab/3D_Micropatterned_Traction_Force_Microscopy/tree/main/Examples/Abaqus_Models).
 
 ### Parameters:
 
