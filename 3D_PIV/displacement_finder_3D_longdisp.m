@@ -99,7 +99,9 @@ function File = displacement_finder_3D_longdisp(Settings, File, n_th_disp)
                 resolution, ...             % Resolution, in the X direction (columns), of the PIV grid.
                 resolution_z, ...           % Resolution, in the Z direction (layers), of the PIV grid.
                 overlap, ...                % Overlap between blocks, in XY.
+                overlap, ...                % Overlap between blocks, in XY.
                 overlap_z, ...              % Overlap between blocks, in Z.
+                padding, ...                % Padding for the PIV, in XY, usually 0.
                 padding, ...                % Padding for the PIV, in XY, usually 0.
                 paddingz, ...               % Padding in the Z-direction.
                 blocksizedec, ...           % Amount by which each side of the interrogation box shrinks at every iteration.
@@ -113,6 +115,7 @@ function File = displacement_finder_3D_longdisp(Settings, File, n_th_disp)
                 longdisp_del, ...           % For each box where longdisp is required, apply longdisp to the neighbouring "del" 
                 longdisp_del_z, ...         % boxes around it. In XY and Z respectively.
                 dynamic_window, ...         % 1 if the sizes of the PIV windows are determined dynamically; 0 otherwise.
+                filt_size, ...              % Size of the Predictor filter, in window lengths, i.e. 
                 filt_size, ...              % Size of the Predictor filter, in window lengths, i.e. 
                 filt_size_z, ...            % filter_size = filt_size*window_size. In XY and Z respectively.
                 filt_pow, ...               % Power of the Predictor filter.
