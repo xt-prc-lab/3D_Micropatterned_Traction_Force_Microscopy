@@ -29,7 +29,7 @@
 %       dx [3D matrix]: x-component of the displacement field.                                                                 %
 %       dy [3D matrix]: y-component of the displacement field.                                                                 %
 %       dz [3D matrix]: z-component of the displacement field.                                                                 %
-%       pkh [scalar]: value of the cross-correlation at the peak.                                                              %
+%       pkh [3D matrix]: value of the cross-correlation at the peak.                                                           %
 %                                                                                                                              %
 %   Last Revison Date: 04/03/2024                                                                                              %
 %   Based on the 2D PIV created by Xavier Trepat (03/2008).                                                                    %
