@@ -18,7 +18,7 @@
 %       File [structure]: Modified File structure.                                                                             %
 %                                                                                                                              %
 %   Last Revison Date: 22/01/2024                                                                                              %
-%   Created by Ernest Latorre-Ibars and Manuel Gomez Gonzalez                                                                  %
+%   Created by Manuel Gomez Gonzalez and Ernest Latorre-Ibars                                                                  %
 %                                                                                                                              %
 %   References:                                                                                                                %
 %       N/A.                                                                                                                   %
@@ -886,15 +886,24 @@ function File = Tractions_abaqus_full3D(Settings, File, exp_type, Settings_abaqu
 
     if isfield(Settings, "constrained") && strcmp(Settings.constrained, 'Constrained')
 
-        % Solve the constrained problem.
-        calculate_constrained_tractions(File.AbaqusPath, jobname, coords(:, 1), [DX_nodes_q, DY_nodes_q, DZ_nodes_q], ...
-                                        nodes_to_impose_disp, nodes_fixed, nodes_coord, elements_surface, elements_surface_all);
+        % Solve the constrained problem using alpha and beta and calculating the offset in displacements that balances the traction field.
+        [DX_PIV_offset_um, DY_PIV_offset_um, DZ_PIV_offset_um] = calculate_constrained_tractions(...
+                    File.AbaqusPath, jobname, coords(:, 1), [coords(:, 5), coords(:, 6), coords(:, 7)], ...
+                    nodes_to_impose_disp, nodes_fixed, nodes_coord, elements_surface, elements_surface_all);
 
         for suffix = {'_deformed_coord.dat', '_deformed_coord_all_elements.dat', '_reactions.dat', '_stress_tensor.dat', '.odb'}
             suffix_2 = suffix{1};
             suffix_2 = [suffix_2(1:end-4), '_unconstrained', suffix_2(end-3:end)];
             movefile([jobname, suffix{1}], [File.AbaqusPath, filesep, jobname, suffix_2]);
         end
+
+        % Save the offset.
+        tmp_header = [{'Displacement offset in x (um)'}, {'Displacement offset in y (um)'}, {'Displacement offset in z (um)'}];
+        tmp_header = [{'Displacement_offset_in_x_um'}, {'Displacement_offset_in_y_um'}, {'Displacement_offset_in_z_um'}];
+        tmp = [DX_PIV_offset_um, DY_PIV_offset_um, DZ_PIV_offset_um];
+
+        writetable(array2table(tmp, 'VariableNames', tmp_header), ...
+                   [File.TracPath, filesep, 'Displacements_Offset_Constrained_', File.Base.Beads, '.csv']);
 
     else
 

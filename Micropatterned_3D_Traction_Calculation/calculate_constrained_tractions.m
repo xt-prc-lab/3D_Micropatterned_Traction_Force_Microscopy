@@ -32,8 +32,9 @@
 %                                                                                                                              %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-function calculate_constrained_tractions(folder, jobname, nodes_surf_bc, def_surf_bc, nodes_surf, nodes_bottom, ...
-                                         nodes_coordinates, elements_surface, elements_surface_all)
+function [DX_PIV_offset_um, DY_PIV_offset_um, DZ_PIV_offset_um] = calculate_constrained_tractions(...
+                    folder, jobname, nodes_surf_bc, def_surf_bc, nodes_surf, nodes_bottom, nodes_coordinates, ...
+                    elements_surface, elements_surface_all)
 
     %% Import the stiffness matrix of the un-constrained problem.
     % Output from this block:
@@ -68,6 +69,17 @@ function calculate_constrained_tractions(folder, jobname, nodes_surf_bc, def_sur
     nodes_free_surf = nodes_coordinates(nodes_coordinates(:, 4)==surf_z_pos, 1);
     nodes_well_surf = setdiff(nodes_surf, nodes_free_surf);
 
+    xx = nodes_coordinates(nodes_well_surf, 2);
+    yy = nodes_coordinates(nodes_well_surf, 3);
+
+    rr = sqrt(xx.*xx + yy.*yy);
+
+    r_median = median(rr)
+
+    nodes_well_surf = nodes_well_surf(rr<=1.01*r_median);
+
+    nodes_free_surf = setdiff(nodes_surf, nodes_well_surf);
+
     nodes_dof_well_surf = [3*(nodes_well_surf-1)+1; 3*(nodes_well_surf-1)+2; 3*(nodes_well_surf-1)+3];
 
     %% Remove the degrees of freedom of the bottom nodes.
@@ -92,6 +104,16 @@ function calculate_constrained_tractions(folder, jobname, nodes_surf_bc, def_sur
     L_nobottom([nodes_dof_bottom; nodes_dof_well_surf], :) = [];
     L_nobottom(:, nodes_dof_bottom) = [];
 
+    % Matrix T
+    T_nobottom = sparse(nodes_dof_well_surf, ...
+                        nodes_dof_well_surf, ...
+                        ones(size(nodes_dof_well_surf, 1), 1), 3*n_nodes, 3*n_nodes);
+    T_nobottom(nodes_dof_bottom, :) = [];
+    T_nobottom(:, nodes_dof_bottom) = [];
+
+    beta = 5e-10;
+    k_beta_nobottom = beta*T_nobottom;
+
     %% Ensemble the modified stiffness matrix.
 
     k = 1;  % Energy constant.
@@ -100,21 +122,41 @@ function calculate_constrained_tractions(folder, jobname, nodes_surf_bc, def_sur
     n_nobottom = n_nodes-size(nodes_bottom, 1);
 
     % Modified rigidity matrix excluding the nodes belonging to the bottom.
-    k_mod_nobottom = sparse(4*3*n_nobottom-3*size(nodes_well_surf, 1), 4*3*n_nobottom-3*size(nodes_well_surf, 1));
+    s_vec_x = zeros(3*n_nobottom, 1);
+    s_vec_y = zeros(3*n_nobottom, 1);
+    s_vec_z = zeros(3*n_nobottom, 1);
+
+    s_vec_x(3*(nodes_surf_bc-1)+1) = 1;
+    s_vec_y(3*(nodes_surf_bc-1)+2) = 1;
+    s_vec_z(3*(nodes_surf_bc-1)+3) = 1;
+
+    k_mod_nobottom = sparse(4*3*n_nobottom-3*size(nodes_well_surf, 1)+3, 4*3*n_nobottom-3*size(nodes_well_surf, 1)+3);
 
     k_mod_nobottom(1:3*n_nobottom, 1:3*n_nobottom) = k*S_nobottom;
     k_mod_nobottom(1:3*n_nobottom, (2*3*n_nobottom+1):3*3*n_nobottom) = k_rigidity_nobottom';
+    k_mod_nobottom(1:3*n_nobottom, end-2) = k*s_vec_x;
+    k_mod_nobottom(1:3*n_nobottom, end-1) = k*s_vec_y;
+    k_mod_nobottom(1:3*n_nobottom, end  ) = k*s_vec_z;
     k_mod_nobottom((3*n_nobottom+1):2*3*n_nobottom, (2*3*n_nobottom+1):3*3*n_nobottom) = -speye(3*n_nobottom, 3*n_nobottom);
-    k_mod_nobottom((3*n_nobottom+1):2*3*n_nobottom, (3*3*n_nobottom+1):end) = L_nobottom';
+    k_mod_nobottom((3*n_nobottom+1):2*3*n_nobottom, (3*3*n_nobottom+1):(end-3)) = L_nobottom';
     k_mod_nobottom((2*3*n_nobottom+1):3*3*n_nobottom, 1:3*n_nobottom) = k_rigidity_nobottom;
     k_mod_nobottom((2*3*n_nobottom+1):3*3*n_nobottom, (3*n_nobottom+1):2*3*n_nobottom) = -speye(3*n_nobottom, 3*n_nobottom);
-    k_mod_nobottom((3*3*n_nobottom+1):end, (3*n_nobottom+1):2*3*n_nobottom) = L_nobottom;
+    k_mod_nobottom((3*3*n_nobottom+1):(end-3), (3*n_nobottom+1):2*3*n_nobottom) = L_nobottom;
+    k_mod_nobottom(end-2, 1:3*n_nobottom) = k*s_vec_x';
+    k_mod_nobottom(end-1, 1:3*n_nobottom) = k*s_vec_y';
+    k_mod_nobottom(end  , 1:3*n_nobottom) = k*s_vec_z';
+    k_mod_nobottom(end-2, end-2) = k*numel(nodes_surf_bc);
+    k_mod_nobottom(end-1, end-1) = k*numel(nodes_surf_bc);
+    k_mod_nobottom(end  , end  ) = k*numel(nodes_surf_bc);
 
     % Forcing vector, b, excluding the nodes belonging to the bottom.
-    b_nobottom = sparse(4*3*n_nodes, 1);
+    b_nobottom = sparse(4*3*n_nodes+3, 1);
     b_nobottom(3*(nodes_surf_bc-1)+1) = k*def_surf_bc(:, 1);
     b_nobottom(3*(nodes_surf_bc-1)+2) = k*def_surf_bc(:, 2);
     b_nobottom(3*(nodes_surf_bc-1)+3) = k*def_surf_bc(:, 3);
+    b_nobottom(end-2) = k*sum(def_surf_bc(:, 1), 'omitnan');
+    b_nobottom(end-1) = k*sum(def_surf_bc(:, 2), 'omitnan');
+    b_nobottom(end  ) = k*sum(def_surf_bc(:, 3), 'omitnan');
 
     b_nobottom([nodes_dof_bottom; nodes_dof_bottom+3*n_nodes; nodes_dof_bottom+2*3*n_nodes; [nodes_dof_bottom; nodes_dof_well_surf]+3*3*n_nodes]) = [];
 
@@ -219,9 +261,25 @@ function calculate_constrained_tractions(folder, jobname, nodes_surf_bc, def_sur
     k_alpha_nobottom(:, nodes_dof_bottom) = [];
 
     % Modified rigidity matrix excluding the nodes belonging to the bottom.
-    k_mod_nobottom((3*n_nobottom+1):2*3*n_nobottom, (3*n_nobottom+1):2*3*n_nobottom) = k_alpha_nobottom;
+    k_mod_nobottom((3*n_nobottom+1):2*3*n_nobottom, (3*n_nobottom+1):2*3*n_nobottom) = k_alpha_nobottom + k_beta_nobottom;
 
     %% Solve the problem.
+    x_nobottom = k_mod_nobottom\b_nobottom;
+
+    %% Do another iteration:
+    DX_PIV_offset_um = x_nobottom(end-2);
+    DY_PIV_offset_um = x_nobottom(end-1);
+    DZ_PIV_offset_um = x_nobottom(end  );
+
+    k_mod_nobottom = k_mod_nobottom(1:(end-3), 1:(end-3));
+
+    b_nobottom = sparse(4*3*n_nodes, 1);
+    b_nobottom(3*(nodes_surf_bc-1)+1) = k*(def_surf_bc(:, 1) - DX_PIV_offset_um);
+    b_nobottom(3*(nodes_surf_bc-1)+2) = k*(def_surf_bc(:, 2) - DY_PIV_offset_um);
+    b_nobottom(3*(nodes_surf_bc-1)+3) = k*(def_surf_bc(:, 3) - DZ_PIV_offset_um);
+
+    b_nobottom([nodes_dof_bottom; nodes_dof_bottom+3*n_nodes; nodes_dof_bottom+2*3*n_nodes; [nodes_dof_bottom; nodes_dof_well_surf]+3*3*n_nodes]) = [];
+
     x_nobottom = k_mod_nobottom\b_nobottom;
 
     %% Save the data.

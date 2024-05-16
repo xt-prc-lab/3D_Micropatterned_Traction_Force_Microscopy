@@ -16,9 +16,11 @@
 %   References:                                                                                                                %
 %       "Effect of predictor corrector filtering on the stability and spatial resolution of iterative PIV interrogation";      %
 %       F. F. J. Schrijer and F. Scarano; Experiments in Fluids, November 2008, Volume 45, Issue 5, pp 927–941.                %
+%       https://doi.org/10.1007/s00348-008-0511-7                                                                              %
 %                                                                                                                              %
 %       "A Fast Iterative Digital Volume Correlation Algorithm for Large Deformations"; E. Bar-Kochba, J. Toyjanova,           %
 %       E. Andrews, K.-S. Kim and C. Franck; Experimental Mechanics, January 2015, Volume 55, Issue 1, pp 261–274.             %
+%       https://doi.org/10.1007/s11340-014-9874-2                                                                              %
 %                                                                                                                              %
 %                                                                                                                              %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

@@ -32,14 +32,14 @@ modify_workers_local_cluster(n_th, n_th);
 t_0 = 0;
 
 % List of positions to analyze.
-f_0 = 5;
+f_0 = 4;
 f_f = f_0;
 
 f_list = f_0:f_f;
 
 % File.pathname is created by Matlab's PIV program, and it states where the PIV analysis data was saved. However, we might have 
 % moved folders before performing the Abaqus analysis. If so, write in fold the folder where the PIV data currently resides.
-fold = '/mnt/Data/Laura/2022-07-23_TFM_15kPa_15-19well_DMSO-Bleb/cells/220723_Results-1/15well_gel2_T0-Try/f';
+fold = '../Examples/Data/220412_Results/f';
 
 % Settings needed for abaqus caltulation.
 Settings_abaqus.abaqus_path = '/usr/simulia/abaqus/6.14-5/code/bin/abq6145';    % Path of the abaqus executable.
@@ -101,7 +101,6 @@ Settings_abaqus.jobabaqus_file = 'Job-111.inp';
 % Scratch directory used by abaqus. Set it if you have any problem with the default one (e.g. if /tmp is mapped to ram, and you 
 % run out of ram memory).
 Settings_abaqus.abaqus_scratch_dir = '/tmp';
-% Settings_abaqus.abaqus_scratch_dir = '/mnt/Data/abaqus_temp';
 
 % Maximum memory allowed to be used by abaqus, in megabytes.
 Settings_abaqus.abaqus_mem_use = num2str(90*1024);
