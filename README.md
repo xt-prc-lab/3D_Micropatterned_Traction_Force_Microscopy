@@ -9,10 +9,10 @@ It allows to calculate the 3D tractions exerted by a cell inside a micro-well mi
 
 This repository is organized in the following directories:
 
-  * [3D_PIV](https://github.com/xt-prc-lab/3D_Micropatterned_Traction_Force_Microscopy/tree/main/3D_PIV) contains the code to calculate the 3D displacement field of the gel.
-  * [Micropatterned_3D_Traction_Calculation](https://github.com/xt-prc-lab/3D_Micropatterned_Traction_Force_Microscopy/tree/main/Micropatterned_3D_Traction_Calculation) contains the code to calculate the exerted tractions from the previously calculated displacement field.
-  * [Unfold_Well](https://github.com/xt-prc-lab/3D_Micropatterned_Traction_Force_Microscopy/tree/main/Unfold_Well) contains the code to project and separate the data in the different sections of the well: the upper surface of the gel, the well's walls and the well's bottom.
-  * [Examples](https://github.com/xt-prc-lab/3D_Micropatterned_Traction_Force_Microscopy/tree/main/Examples) contains two example experiments to be analyzed.
+  * [3D_PIV](https://github.com/xt-prc-lab/3D_Micropatterned_Traction_Force_Microscopy/tree/main/3D_PIV): contains the code to calculate the 3D displacement field of the gel.
+  * [Micropatterned_3D_Traction_Calculation](https://github.com/xt-prc-lab/3D_Micropatterned_Traction_Force_Microscopy/tree/main/Micropatterned_3D_Traction_Calculation): contains the code to calculate the exerted tractions from the previously calculated displacement field.
+  * [Unfold_Well](https://github.com/xt-prc-lab/3D_Micropatterned_Traction_Force_Microscopy/tree/main/Unfold_Well): contains the code to project and separate the data in the different sections of the well: the upper surface of the gel, the well's walls and the well's bottom.
+  * [Examples](https://github.com/xt-prc-lab/3D_Micropatterned_Traction_Force_Microscopy/tree/main/Examples): contains two example experiments to be analyzed.
 
 # Prerequisites:
 
